@@ -9,24 +9,28 @@ class NextPrayerSectionList extends StatelessWidget {
   const NextPrayerSectionList({
     super.key,
     required this.prayerTime,
+    required this.tomorrowPrayerTime,
   });
 
   final PrayerTimes prayerTime;
+  final PrayerTimes tomorrowPrayerTime;
 
   @override
   Widget build(BuildContext context) {
+    bool isTomorrow = prayerTime.nextPrayer().name == "none";
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         NextPrayerSectionItem(
-          hover: (prayerTime.nextPrayer().name == "none" ||
-              prayerTime.nextPrayer().name == "fajr"),
+          hover: (isTomorrow || prayerTime.nextPrayer().name == "fajr"),
           prayerIcon: const Icon(
             Icons.wb_twighlight,
             color: Color.fromARGB(255, 98, 224, 163),
           ),
           prayer: "Fajr",
-          prayerTime: convertTo12HourFormat(prayerTime.fajr),
+          prayerTime: isTomorrow
+              ? convertTo12HourFormat(tomorrowPrayerTime.fajr)
+              : convertTo12HourFormat(prayerTime.fajr),
         ),
         NextPrayerSectionItem(
           hover: (prayerTime.nextPrayer().name == "sunrise"),
@@ -35,7 +39,9 @@ class NextPrayerSectionList extends StatelessWidget {
             color: Color.fromARGB(255, 158, 216, 90),
           ),
           prayer: "Sunrise",
-          prayerTime: convertTo12HourFormat(prayerTime.sunrise),
+          prayerTime: isTomorrow
+              ? convertTo12HourFormat(tomorrowPrayerTime.sunrise)
+              : convertTo12HourFormat(prayerTime.sunrise),
         ),
         NextPrayerSectionItem(
           hover: (prayerTime.nextPrayer().name == "dhuhr"),
@@ -44,7 +50,9 @@ class NextPrayerSectionList extends StatelessWidget {
             color: Colors.amber,
           ),
           prayer: "Dhuhr",
-          prayerTime: convertTo12HourFormat(prayerTime.dhuhr),
+          prayerTime: isTomorrow
+              ? convertTo12HourFormat(tomorrowPrayerTime.dhuhr)
+              : convertTo12HourFormat(prayerTime.dhuhr),
         ),
         NextPrayerSectionItem(
           hover: (prayerTime.nextPrayer().name == "asr"),
@@ -53,7 +61,9 @@ class NextPrayerSectionList extends StatelessWidget {
             color: Colors.orange,
           ),
           prayer: "Asr",
-          prayerTime: convertTo12HourFormat(prayerTime.asr),
+          prayerTime: isTomorrow
+              ? convertTo12HourFormat(tomorrowPrayerTime.asr)
+              : convertTo12HourFormat(prayerTime.asr),
         ),
         NextPrayerSectionItem(
           hover: (prayerTime.nextPrayer().name == "maghrib"),
@@ -62,14 +72,18 @@ class NextPrayerSectionList extends StatelessWidget {
             color: Colors.blueAccent,
           ),
           prayer: "Maghrib",
-          prayerTime: convertTo12HourFormat(prayerTime.maghrib),
+          prayerTime: isTomorrow
+              ? convertTo12HourFormat(tomorrowPrayerTime.maghrib)
+              : convertTo12HourFormat(prayerTime.maghrib),
         ),
         NextPrayerSectionItem(
           hover: (prayerTime.nextPrayer().name == "isha"),
           prayerIcon: const Icon(FontAwesomeIcons.solidMoon,
               color: Colors.deepPurpleAccent),
           prayer: "Isha",
-          prayerTime: convertTo12HourFormat(prayerTime.isha),
+          prayerTime: isTomorrow
+              ? convertTo12HourFormat(tomorrowPrayerTime.isha)
+              : convertTo12HourFormat(prayerTime.isha),
         ),
       ],
     );

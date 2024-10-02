@@ -28,7 +28,7 @@ class PrayersCubit extends Cubit<PrayersState> {
 
       DateTime date = DateTime.now();
 
-      for (int i = -5; i <= 5; i++) {
+      for (int i = -5; i <= 10; i++) {
         final newDate = date.add(Duration(days: i));
         dates.add(newDate);
         prayerTime = PrayerTimes(myCoordinates,

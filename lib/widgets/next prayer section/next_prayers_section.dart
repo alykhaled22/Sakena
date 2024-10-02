@@ -31,9 +31,9 @@ class NextPrayersSection extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            NextPrayerSectionInfo(prayerTime: prayerTime, location: location),
+            NextPrayerSectionInfo(prayerTime: prayerTime, location: location,tomorrowPrayerTime: tommoroPrayerTime,),
             const SizedBox(height: 30),
-            NextPrayerSectionList(prayerTime: prayerTime)
+            NextPrayerSectionList(prayerTime: prayerTime,tomorrowPrayerTime: tommoroPrayerTime,)
           ],
         ),
       ),

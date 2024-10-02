@@ -65,6 +65,10 @@ class HomeViewBody extends StatelessWidget {
               ),
             ),
           );
+        } else if (state is PrayersFailureState) {
+          return Center(
+            child: Text(state.errMsg),
+          );
         } else {
           return const Center(
             child: CircularProgressIndicator(),

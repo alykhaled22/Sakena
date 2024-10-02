@@ -5,9 +5,10 @@ import 'package:sakena/widgets/next%20prayer%20section/next_prayer_count_down.da
 
 class NextPrayerSectionInfo extends StatelessWidget {
   const NextPrayerSectionInfo(
-      {super.key, required this.prayerTime, required this.location});
+      {super.key, required this.prayerTime, required this.location, required this.tomorrowPrayerTime});
 
   final PrayerTimes prayerTime;
+  final PrayerTimes tomorrowPrayerTime;
   final String location;
 
   @override
@@ -15,7 +16,7 @@ class NextPrayerSectionInfo extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        NextPrayerCountDown(prayerTime: prayerTime),
+        NextPrayerCountDown(prayerTime: prayerTime,tomorrowPrayerTime: tomorrowPrayerTime,),
         DateAndLocation(location: location),
       ],
     );

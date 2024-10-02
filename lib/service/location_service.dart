@@ -67,8 +67,7 @@ class LocationService {
     return {
       "latitude": coordinates["latitude"] ?? 30.0444,
       "longitude": coordinates["longitude"] ?? 31.235712,
-      'country': "Egypt",
-      'city': "Cairo"
+      'location': "Cairo"
     };
   }
 }
