@@ -21,9 +21,11 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
   @override
   void initState() {
     super.initState();
-    nextPrayerTime =
-        widget.prayerTime.timeForPrayer(widget.prayerTime.nextPrayer()) ??
-            widget.tomorrowPrayerTime.fajr;
+    if (!(duha || iqama)) {
+      nextPrayerTime =
+          widget.prayerTime.timeForPrayer(widget.prayerTime.nextPrayer()) ??
+              widget.tomorrowPrayerTime.fajr;
+    }
   }
 
   @override
@@ -80,15 +82,15 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
                           .timeForPrayer(widget.prayerTime.nextPrayer()) ??
                       widget.tomorrowPrayerTime.fajr;
                 } else {
-                  if (widget.prayerTime.currentPrayer().name == 'sunrise') {
+                  if (widget.prayerTime.nextPrayer().name == 'sunrise') {
                     duha = true;
                     nextPrayerTime =
                         DateTime.now().add(const Duration(minutes: 20));
                   } else {
                     iqama = true;
                     nextPrayerTime = DateTime.now().add(Duration(
-                        minutes: getIqamaTime(
-                            widget.prayerTime.currentPrayer().name)));
+                        minutes:
+                            getIqamaTime(widget.prayerTime.nextPrayer().name)));
                   }
                 }
               });
