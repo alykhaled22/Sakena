@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:sakena/helper.dart';
 
 class PrayerTime extends StatefulWidget {
   const PrayerTime({super.key, this.isSunrise = false, required this.time});
@@ -19,7 +19,7 @@ class _PrayerTimeState extends State<PrayerTime> {
     return Row(
       children: [
         Text(
-          convertTo12HourFormat(widget.time),
+          convertTo12HourFormatA(widget.time),
           style: const TextStyle(fontSize: 16,fontFamily: "Open Sans"),
         ),
         const SizedBox(
@@ -48,8 +48,3 @@ class _PrayerTimeState extends State<PrayerTime> {
   }
 }
 
-String convertTo12HourFormat(DateTime time) {
-  String formattedTime = DateFormat('h:mm a').format(time);
-
-  return formattedTime;
-}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../next prayer section/date_and_location.dart';
+import 'package:sakena/helper.dart';
 
 class PrayerCardSwapper extends StatelessWidget {
   const PrayerCardSwapper(

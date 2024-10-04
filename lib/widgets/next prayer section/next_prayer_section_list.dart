@@ -1,8 +1,7 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
-import 'package:sakena/widgets/next%20prayer%20section/next_prayer_count_down.dart';
+import 'package:sakena/helper.dart';
 
 import 'next_prayer_section_item.dart';
 
@@ -21,15 +20,20 @@ class NextPrayerSectionList extends StatefulWidget {
 }
 
 class _NextPrayerSectionListState extends State<NextPrayerSectionList> {
+  String? curruntPrayer;
+  @override
+  void initState() {
+    super.initState();
+    curruntPrayer = widget.prayerTime.currentPrayer().name;
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isTomorrow = widget.prayerTime.nextPrayer().name == "none";
-    DateTime nextPrayerTime = widget.prayerTime
-        .timeForPrayer(widget.prayerTime.currentPrayer())!
-        .add(Duration(
-            minutes: getIqamaTime(widget.prayerTime.currentPrayer().name)));
-    if (nextPrayerTime == DateTime.now()) {
-      setState(() {});
+    if (curruntPrayer != widget.prayerTime.currentPrayer().name) {
+      setState(() {
+        curruntPrayer = widget.prayerTime.currentPrayer().name;
+      });
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,8 +107,3 @@ class _NextPrayerSectionListState extends State<NextPrayerSectionList> {
   }
 }
 
-String convertTo12HourFormat(DateTime time) {
-  String formattedTime = DateFormat('h:mm').format(time);
-
-  return formattedTime;
-}

@@ -1,6 +1,8 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
+import 'package:sakena/helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NextPrayerCountDown extends StatefulWidget {
   const NextPrayerCountDown(
@@ -21,11 +23,26 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
   @override
   void initState() {
     super.initState();
+    loadState();
     if (!(duha || iqama)) {
       nextPrayerTime =
           widget.prayerTime.timeForPrayer(widget.prayerTime.nextPrayer()) ??
               widget.tomorrowPrayerTime.fajr;
     }
+  }
+
+  Future<void> loadState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      iqama = prefs.getBool('iqama') ?? false;
+      duha = prefs.getBool('duha') ?? false;
+    });
+  }
+
+  Future<void> saveState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('iqama', iqama);
+    prefs.setBool('duha', duha);
   }
 
   @override
@@ -73,7 +90,7 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
           timeTextStyle:
               const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           onTick: (remainingTime) {
-            if (remainingTime.inSeconds == 1) {
+            if (remainingTime.inMilliseconds == 1) {
               setState(() {
                 if (duha || iqama) {
                   duha = false;
@@ -93,6 +110,7 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
                             getIqamaTime(widget.prayerTime.nextPrayer().name)));
                   }
                 }
+                saveState();
               });
             }
           },
@@ -102,15 +120,3 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
   }
 }
 
-int getIqamaTime(String prayer) {
-  switch (prayer) {
-    case 'dhuhr':
-    case 'asr':
-    case 'isha':
-      return 15;
-    case 'maghrib':
-      return 10;
-    default:
-      return 20;
-  }
-}
