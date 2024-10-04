@@ -23,11 +23,24 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
   @override
   void initState() {
     super.initState();
-    loadState();
+    initializeState();
+  }
+
+  Future<void> initializeState() async {
+    await loadState();
     if (!(duha || iqama)) {
-      nextPrayerTime =
-          widget.prayerTime.timeForPrayer(widget.prayerTime.nextPrayer()) ??
-              widget.tomorrowPrayerTime.fajr;
+      setState(() {
+        nextPrayerTime =
+            widget.prayerTime.timeForPrayer(widget.prayerTime.nextPrayer()) ??
+                widget.tomorrowPrayerTime.fajr;
+      });
+    } else {
+      setState(() {
+        nextPrayerTime = nextPrayerTime = widget.prayerTime
+            .timeForPrayer(widget.prayerTime.currentPrayer())!
+            .add(Duration(
+                minutes: getIqamaTime(widget.prayerTime.currentPrayer().name)));
+      });
     }
   }
 
@@ -80,6 +93,8 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
         const SizedBox(
           height: 5,
         ),
+        (nextPrayerTime == null) ?
+        const Text("00:00:00",style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)):
         TimerCountdown(
           endTime: nextPrayerTime!,
           format: (duha || iqama)
@@ -90,7 +105,7 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
           timeTextStyle:
               const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           onTick: (remainingTime) {
-            if (remainingTime.inMilliseconds == 1) {
+            if (remainingTime.inSeconds == 1) {
               setState(() {
                 if (duha || iqama) {
                   duha = false;
@@ -101,13 +116,15 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
                 } else {
                   if (widget.prayerTime.nextPrayer().name == 'sunrise') {
                     duha = true;
-                    nextPrayerTime =
-                        DateTime.now().add(const Duration(minutes: 20));
+                    nextPrayerTime = widget.prayerTime.sunrise
+                        .add(const Duration(minutes: 20));
                   } else {
                     iqama = true;
-                    nextPrayerTime = DateTime.now().add(Duration(
-                        minutes:
-                            getIqamaTime(widget.prayerTime.nextPrayer().name)));
+                    nextPrayerTime = widget.prayerTime
+                        .timeForPrayer(widget.prayerTime.nextPrayer())!
+                        .add(Duration(
+                            minutes: getIqamaTime(
+                                widget.prayerTime.nextPrayer().name)));
                   }
                 }
                 saveState();
@@ -119,4 +136,3 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
     );
   }
 }
-
