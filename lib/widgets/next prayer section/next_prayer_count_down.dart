@@ -2,7 +2,6 @@ import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
 import 'package:sakena/helper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NextPrayerCountDown extends StatefulWidget {
   const NextPrayerCountDown(
@@ -23,40 +22,26 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
   @override
   void initState() {
     super.initState();
-    initializeState();
-  }
-
-  Future<void> initializeState() async {
-    await loadState();
-    if (!(duha || iqama)) {
-      setState(() {
-        nextPrayerTime =
-            widget.prayerTime.timeForPrayer(widget.prayerTime.nextPrayer()) ??
-                widget.tomorrowPrayerTime.fajr;
-      });
+    DateTime time = widget.prayerTime
+        .timeForPrayer(widget.prayerTime.currentPrayer())!
+        .add(Duration(
+            minutes: getIqamaTime(widget.prayerTime.currentPrayer().name)));
+    if (time.compareTo(DateTime.now()) > 0) {
+      if (widget.prayerTime.nextPrayer().name == 'sunrise') {
+        duha = true;
+      } else {
+        iqama = true;
+      }
+      nextPrayerTime = time;
     } else {
-      setState(() {
-        nextPrayerTime = nextPrayerTime = widget.prayerTime
-            .timeForPrayer(widget.prayerTime.currentPrayer())!
-            .add(Duration(
-                minutes: getIqamaTime(widget.prayerTime.currentPrayer().name)));
-      });
+      iqama = false;
+      duha = false;
+      nextPrayerTime =
+          widget.prayerTime.timeForPrayer(widget.prayerTime.nextPrayer()) ??
+              widget.tomorrowPrayerTime.fajr;
     }
   }
 
-  Future<void> loadState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      iqama = prefs.getBool('iqama') ?? false;
-      duha = prefs.getBool('duha') ?? false;
-    });
-  }
-
-  Future<void> saveState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('iqama', iqama);
-    prefs.setBool('duha', duha);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,45 +78,45 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
         const SizedBox(
           height: 5,
         ),
-        (nextPrayerTime == null) ?
-        const Text("00:00:00",style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)):
-        TimerCountdown(
-          endTime: nextPrayerTime!,
-          format: (duha || iqama)
-              ? CountDownTimerFormat.minutesSeconds
-              : CountDownTimerFormat.hoursMinutesSeconds,
-          enableDescriptions: false,
-          spacerWidth: 5,
-          timeTextStyle:
-              const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-          onTick: (remainingTime) {
-            if (remainingTime.inSeconds == 1) {
-              setState(() {
-                if (duha || iqama) {
-                  duha = false;
-                  iqama = false;
-                  nextPrayerTime = widget.prayerTime
-                          .timeForPrayer(widget.prayerTime.nextPrayer()) ??
-                      widget.tomorrowPrayerTime.fajr;
-                } else {
-                  if (widget.prayerTime.nextPrayer().name == 'sunrise') {
-                    duha = true;
-                    nextPrayerTime = widget.prayerTime.sunrise
-                        .add(const Duration(minutes: 20));
-                  } else {
-                    iqama = true;
-                    nextPrayerTime = widget.prayerTime
-                        .timeForPrayer(widget.prayerTime.nextPrayer())!
-                        .add(Duration(
-                            minutes: getIqamaTime(
-                                widget.prayerTime.nextPrayer().name)));
+        (nextPrayerTime == null)
+            ? const Text("00:00:00",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold))
+            : TimerCountdown(
+                endTime: nextPrayerTime!,
+                format: (duha || iqama)
+                    ? CountDownTimerFormat.minutesSeconds
+                    : CountDownTimerFormat.hoursMinutesSeconds,
+                enableDescriptions: false,
+                spacerWidth: 5,
+                timeTextStyle:
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                onTick: (remainingTime) {
+                  if (remainingTime.inSeconds == 1) {
+                    setState(() {
+                      if (duha || iqama) {
+                        duha = false;
+                        iqama = false;
+                        nextPrayerTime = widget.prayerTime.timeForPrayer(
+                                widget.prayerTime.nextPrayer()) ??
+                            widget.tomorrowPrayerTime.fajr;
+                      } else {
+                        if (widget.prayerTime.nextPrayer().name == 'sunrise') {
+                          duha = true;
+                          nextPrayerTime = widget.prayerTime.sunrise
+                              .add(const Duration(minutes: 20));
+                        } else {
+                          iqama = true;
+                          nextPrayerTime = widget.prayerTime
+                              .timeForPrayer(widget.prayerTime.nextPrayer())!
+                              .add(Duration(
+                                  minutes: getIqamaTime(
+                                      widget.prayerTime.nextPrayer().name)));
+                        }
+                      }
+                    });
                   }
-                }
-                saveState();
-              });
-            }
-          },
-        )
+                },
+              )
       ],
     );
   }
