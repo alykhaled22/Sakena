@@ -1,8 +1,8 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sakena/widgets/all%20prayers%20section/all_prayers_section_item.dart';
-import 'package:sakena/widgets/all%20prayers%20section/prayer_card_swapper.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/all%20prayers%20section/all_prayers_section_item.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/all%20prayers%20section/prayer_card_swapper.dart';
 
 class AllPrayersSectionList extends StatelessWidget {
   const AllPrayersSectionList(

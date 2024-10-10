@@ -1,7 +1,7 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sakena/helper.dart';
+import 'package:sakena/core/utils/helper.dart';
 
 import 'next_prayer_section_item.dart';
 

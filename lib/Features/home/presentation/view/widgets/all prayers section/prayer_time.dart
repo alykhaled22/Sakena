@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sakena/helper.dart';
+import 'package:sakena/core/utils/helper.dart';
 
 class PrayerTime extends StatefulWidget {
   const PrayerTime({super.key, this.isSunrise = false, required this.time});

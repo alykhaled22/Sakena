@@ -1,10 +1,10 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sakena/cubit/prayers_cubit.dart';
-import 'package:sakena/cubit/prayers_states.dart';
-import 'package:sakena/widgets/all%20prayers%20section/all_prayers_section.dart';
-import 'package:sakena/widgets/next%20prayer%20section/next_prayers_section.dart';
+import 'package:sakena/Features/home/manager/prayers_cubit/prayers_cubit.dart';
+import 'package:sakena/Features/home/manager/prayers_cubit/prayers_states.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/all%20prayers%20section/all_prayers_section.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/next%20prayer%20section/next_prayers_section.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({

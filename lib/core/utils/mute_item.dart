@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sakena/widgets/custom_icon_button.dart';
+import 'package:sakena/core/utils/custom_icon_button.dart';
 
 class MuteItem extends StatelessWidget {
   const MuteItem({super.key, required this.prayerName});

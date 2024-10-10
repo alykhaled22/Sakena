@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sakena/widgets/home_view_body.dart';
+import 'package:sakena/Features/home/presentation/view/home_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -19,7 +19,9 @@ class HomeView extends StatelessWidget {
         selectedItemColor: const Color(0xff0F5959),
         unselectedItemColor: Colors.grey,
         currentIndex: 0,
-        onTap: (index) {},
+        onTap: (index) {
+
+        },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.mosque),

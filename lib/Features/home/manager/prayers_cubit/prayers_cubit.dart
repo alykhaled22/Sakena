@@ -1,8 +1,8 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sakena/cubit/prayers_states.dart';
-import 'package:sakena/service/location_service.dart';
+import 'package:sakena/Features/home/manager/prayers_cubit/prayers_states.dart';
+import 'package:sakena/core/utils/location_service.dart';
 
 class PrayersCubit extends Cubit<PrayersState> {
   PrayerTimes? prayerTime;

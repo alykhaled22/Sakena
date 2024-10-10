@@ -1,6 +1,6 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
-import 'package:sakena/widgets/all%20prayers%20section/all_prayers_section_list.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/all%20prayers%20section/all_prayers_section_list.dart';
 
 class AllPrayersSection extends StatelessWidget {
   const AllPrayersSection({

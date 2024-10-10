@@ -1,7 +1,7 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timer_countdown/flutter_timer_countdown.dart';
-import 'package:sakena/helper.dart';
+import 'package:sakena/core/utils/helper.dart';
 
 class NextPrayerCountDown extends StatefulWidget {
   const NextPrayerCountDown(
@@ -22,6 +22,8 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
   @override
   void initState() {
     super.initState();
+    // NotificationService.showBasicNotification(
+    //     widget.prayerTime, widget.tomorrowPrayerTime);
 
     if (widget.prayerTime.currentPrayer().name == "none") {
       iqama = false;
@@ -100,28 +102,29 @@ class _NextPrayerCountDownState extends State<NextPrayerCountDown> {
                     const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 onTick: (remainingTime) {
                   if (remainingTime.inSeconds == 1) {
-                    setState(() {
-                      if (duha || iqama) {
-                        duha = false;
-                        iqama = false;
-                        nextPrayerTime = widget.prayerTime.timeForPrayer(
-                                widget.prayerTime.nextPrayer()) ??
-                            widget.tomorrowPrayerTime.fajr;
+                    if (duha || iqama) {
+                      duha = false;
+                      iqama = false;
+                      nextPrayerTime = widget.prayerTime
+                              .timeForPrayer(widget.prayerTime.nextPrayer()) ??
+                          widget.tomorrowPrayerTime.fajr;
+                    } else {
+                      if (widget.prayerTime.nextPrayer().name == 'sunrise') {
+                        duha = true;
+                        nextPrayerTime = widget.prayerTime.sunrise
+                            .add(const Duration(minutes: 20));
                       } else {
-                        if (widget.prayerTime.nextPrayer().name == 'sunrise') {
-                          duha = true;
-                          nextPrayerTime = widget.prayerTime.sunrise
-                              .add(const Duration(minutes: 20));
-                        } else {
-                          iqama = true;
-                          nextPrayerTime = widget.prayerTime
-                              .timeForPrayer(widget.prayerTime.nextPrayer())!
-                              .add(Duration(
-                                  minutes: getIqamaTime(
-                                      widget.prayerTime.nextPrayer().name)));
-                        }
+                        iqama = true;
+                        nextPrayerTime = widget.prayerTime
+                            .timeForPrayer(widget.prayerTime.nextPrayer())!
+                            .add(Duration(
+                                minutes: getIqamaTime(
+                                    widget.prayerTime.nextPrayer().name)));
                       }
-                    });
+                    }
+                  }
+                  if (remainingTime.inSeconds == 0) {
+                    setState(() {});
                   }
                 },
               )

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sakena/helper.dart';
+import 'package:sakena/core/utils/helper.dart';
 
 class DateAndLocation extends StatelessWidget {
   const DateAndLocation({super.key, required this.location});

@@ -1,7 +1,7 @@
 import 'package:adhan/adhan.dart';
 import 'package:flutter/material.dart';
-import 'package:sakena/widgets/next%20prayer%20section/date_and_location.dart';
-import 'package:sakena/widgets/next%20prayer%20section/next_prayer_count_down.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/next%20prayer%20section/date_and_location.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/next%20prayer%20section/next_prayer_count_down.dart';
 
 class NextPrayerSectionInfo extends StatelessWidget {
   const NextPrayerSectionInfo(

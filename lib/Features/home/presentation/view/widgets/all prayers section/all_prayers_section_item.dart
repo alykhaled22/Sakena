@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sakena/widgets/all%20prayers%20section/prayer_name.dart';
-import 'package:sakena/widgets/all%20prayers%20section/prayer_time.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/all%20prayers%20section/prayer_name.dart';
+import 'package:sakena/Features/home/presentation/view/widgets/all%20prayers%20section/prayer_time.dart';
 
 class AllPrayerSectionItem extends StatelessWidget {
   const AllPrayerSectionItem(
